@@ -1,22 +1,10 @@
 pipeline {
      agent any
      stages {
-         stage('Build') {
+         stage('Deploying Serverless') {
              steps {
-                 sh 'echo "Hello World"'
-                 sh '''
-                     echo "Multiline shell steps works too"
-                     ls -lah
-                 '''
+                 sh 'serverless deploy'
              }
-         }      
-         stage('Upload to AWS') {
-              steps {
-                  withAWS(region:'us-west-2',credentials:'mahesh-aws') {
-                  sh 'echo "Uploading content with AWS creds"'
-                      s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'serverless.yml', bucket:'jenkins-aws-test-bucket')
-                  }
-              }
-         }
+         }  
      }
 }
